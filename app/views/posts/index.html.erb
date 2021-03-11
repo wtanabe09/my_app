@@ -1,13 +1,12 @@
-<h1>投稿一覧</h1>
 <% @posts.each do |post| %>
-  <div>
-    <%
-=begin%>
- <p>投稿ユーザー画像：<%= image_tag('sample-author1.jpg') %></p> 
-<%
-=end%>
-    <p>タイトル：<%= post.title %></p>
-    <p>これからどうする？：<%= post.action %></p>
-    <p>ユーザーネーム：<%= post.user.name %></p>
-  </div>
+    <div>
+    <%= link_to post_path(post.id) do %>
+      <p>タイトル：<%= post.title %></p>
+      <p>これからどうする？：<%= post.action %></p>
+    <% end %>
+    <%= link_to user_path(post.user_id) do %>
+      <p>ユーザー：<%= post.user.name %></p>
+    <% end %>
+    </div>
+  
 <% end %>
