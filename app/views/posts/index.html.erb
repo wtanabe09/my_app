@@ -1,12 +1,17 @@
-<% @posts.each do |post| %>
-    <div>
-    <%= link_to post_path(post.id) do %>
-      <p>タイトル：<%= post.title %></p>
-      <p>これからどうする？：<%= post.action %></p>
-    <% end %>
-    <%= link_to user_path(post.user_id) do %>
-      <p>ユーザー：<%= post.user.name %></p>
-    <% end %>
+<div class="row mx-auto card-container py-5">
+  <% @posts.each do |post| %>
+    <div class="col-md-4 h-100">
+      <div style="min-height: 200px" class="card p-3 mx-auto mt-4 shadow-lg">
+        <div class="card-body">
+          <%= link_to post_path(post.id) do %>
+            <p>タイトル：<%= post.title %></p>
+            <p>これからどうする？：<%= post.action %></p>
+            <%= link_to user_path(post.user_id) do %>
+              <span><i class="fas fa-user"></i> <%= post.user.name %></span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  
-<% end %>
+  <% end %>
+</div>

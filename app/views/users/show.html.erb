@@ -1,17 +1,21 @@
-<div class="profile-container">
+
+<div class="profile-container w-50 mt-5 mx-auto">
   <h3 class="profile-name"><%= @user.name %></h3>
   <p><%= @user.profile %></p>
   <% if @user.id == current_user.id %>
     <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
   <% end %>
 </div>
-<div class="post-container">
+<div class="card-container py-3">
   <% @posts.each do |post| %>
-    <%= link_to post_path(post.id) do %>
-      <div>
+    <div class="card w-50 p-3 mx-auto mt-4 shadow-lg">
+      <%= link_to post_path(post.id) do %>
         <p>タイトル：<%= post.title %></p>
         <p>これからどうする？：<%= post.action %></p>
-      </div>
-    <% end %>
+        <%= link_to user_path(post.user_id) do %>
+          <span><i class="fas fa-user"></i> <%= post.user.name %></span>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
 </div>

@@ -1,9 +1,16 @@
-<h1>TrashBoxトップページ</h1>
-<p>あなたの不満や悩みなどマイナスの感情をシェアして楽になろう<br>
-次のアクションを考えて前向きになろう！</p>
-<% if signed_in? %>
-  <%= link_to "投稿する", new_post_path %>
-<% else %>
-  <%= link_to "ログイン", new_user_session_path %>
-  <%= link_to "サインイン", new_user_registration_path %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 mt-5 mx-auto">
+      <h1>TrashBoxトップページ</h1>
+      <p>あなたの不満や悩みなどマイナスの感情をシェアして楽になろう!<br>
+      次のアクションを考えて前向きになろう！</p>
+      <% if signed_in? %>
+        <%= link_to "投稿する", new_post_path, class:"btn btn-info" %>
+        <%= link_to "投稿一覧", posts_path, class:"btn btn-success" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path, class:"btn btn-info" %>
+        <%= link_to "新規登録", new_user_registration_path, class:"btn btn-success" %>
+      <% end %>
+    </div>
+  </div>
+</div>
