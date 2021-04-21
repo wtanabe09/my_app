@@ -1,4 +1,4 @@
-<div class="card col-md-6 mx-auto h-100 p-2 mt-4 shadow-lg">
+<div class="card col-md-8 mx-auto h-100 p-2 mt-4 shadow-lg">
   <div class="card-body">
     <%= link_to "戻る", posts_path, class:"btn btn-info mb-4" %>
     <div class="post-body">
@@ -11,13 +11,49 @@
       <p>
         <%= link_to user_path(@post.user) do %>
           <span class="mr-1"><i class="fas fa-user"></i><%= @post.user.name %><span>
-        <% end %>
-        ：<%= @post.created_at.strftime('%Y/%m/%d') %>
+        <% end %>：
+        <%= @post.created_at.strftime('%Y/%m/%d') %>
       </p>
+      <div class="comments">
+        <% if @post.favorited_by?(current_user) %>
+          <p>
+            <%= link_to post_favorites_path(@post), method: :delete do %>
+              ♥<%= @post.favorites.count %> いいね
+            <% end %>
+          </p>
+        <% else %>
+          <p>
+            <%= link_to post_favorites_path(@post), method: :post do %>
+              ♡<%= @post.favorites.count %> いいね
+            <% end %>
+          </p>
+        <% end %>
+        <p>コメント件数：<%= @post.post_comments.count %></p>
+        <%= form_with(model:[@post,@post_comment], local: true) do |f| %>
+          <div class="form-group">
+            <%= f.text_field :comment, placeholder:"コメントを残す", class:"form-control" %>
+            <%= f.submit "コメントを送信する", class:"btn btn-sm btn-info mt-1" %>
+          </div>
+        <% end %>
+      </div>
       <% if @post.user_id == current_user.id %>
         <%= link_to "削除", post_path(@post), method: :delete,data: { confirm: "投稿を削除してもよろしいですか？" }, class:"btn btn-danger mr-2" %> 
         <%= link_to "編集", edit_post_path(@post),class:"btn btn-success" %>
       <% end %> 
     </div> 
   </div>
+  
 </div>
+
+<% @post.post_comments.each do |post_comment| %>
+<div class="show-comments card col-md-8 mx-auto mt-3">
+  <div class="card-body">
+    <%= post_comment.user.name %>
+    <%= post_comment.created_at.strftime('%Y/%m/%d') %> <%= post_comment.comment %>
+    <% if post_comment.user == current_user %>
+      <%= link_to "削除", post_post_comment_path(post_comment.post, post_comment), method: :delete, class: "btn btn-sm btn-danger" %>
+    <% end %>
+  </div>
+</div>
+<% end %>
+  
